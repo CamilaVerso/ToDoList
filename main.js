@@ -1,29 +1,49 @@
 
 let tarefas = [];
+let contadorIds = 1;
 
-// Adicionar uma tarefa
 function adicionarTarefa(mensagem) {
-	tarefas.push(mensagem);
+	const novaTarefa = {
+		id: contadorIds++,
+		mensagem: mensagem,
+	}
+	tarefas.push(novaTarefa);
 }
 
 adicionarTarefa("Limpar a casa");
 adicionarTarefa("Limpar o quarto");
 adicionarTarefa("Lavar a louça");
 
-// Editar a tarefa a partir do index
-function editarTarefa(index, novaMensagem) {
-	tarefas[index] = novaMensagem
+function editarTarefaPeloId(id, novaMensagem) {
+	const index = tarefas.findIndex(tarefa => tarefa.id === id);
+
+	if (index !== -1) {
+		tarefas[index].mensagem = novaMensagem;
+		console.log(`Tarefa com Id ${id} editada com sucesso.`);
+	} else {
+		console.log(`Nenhuma tarefa encontrada com o ID ${id}.`);
+	}
 }
 
-// função que listará todas as tarefas adicionadas
 function listarTarefas() {
 	tarefas.forEach((tarefas) => {
-		console.log(`Aqui está a sua tarefa: ${tarefas}`)
+		console.log(`Aqui está a sua tarefa de número ${tarefas.id}: ${tarefas.mensagem}`)
 	})
-
 }
 
-// função que irá excluir a tarefa de acordo com o index
-function removerTarefa(index) {
-	tarefas.splice(index, 1)
+function removerTarefaPeloId(id) {
+	tarefas = tarefas.filter(tarefas => tarefas.id != id);
+}
+
+function obterTarefaPeloId(id) {
+	const tarefasEncontradas = tarefas.filter(tarefa => tarefa.id === id);
+
+	if (tarefasEncontradas.length > 0) {
+		console.log("Tarefa encontrada:");
+		tarefasEncontradas.forEach(tarefa => {
+			console.log(`- ${tarefa.mensagem}`);
+		});0
+	} else {
+		console.log(`Nenhuma tarefa encontrada com o Id ${id}`);
+	}
 }
